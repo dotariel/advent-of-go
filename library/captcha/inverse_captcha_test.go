@@ -5,7 +5,7 @@ import "testing"
 var wrapAroundTestCases = []struct {
 	name     string
 	input    string
-	addfunc  func([]int) int
+	fn       AddFunc
 	expected int
 }{
 	{"first digit matches second and third matches fourth", "1122", WrapAroundAdd, 3},
@@ -20,7 +20,7 @@ var wrapAroundTestCases = []struct {
 var halfWayAroundTestCases = []struct {
 	name     string
 	input    string
-	addfunc  func([]int) int
+	fn       AddFunc
 	expected int
 }{
 	{"list contains 4 items and all digits match digit 2 items ahead", "1212", HalfwayAroundAdd, 6},
@@ -32,7 +32,7 @@ var halfWayAroundTestCases = []struct {
 
 func TestInverseCaptchaWithWrapAround(t *testing.T) {
 	for _, tc := range wrapAroundTestCases {
-		if actual := InverseCaptcha(tc.input, tc.addfunc); actual != tc.expected {
+		if actual := InverseCaptcha(tc.input, tc.fn); actual != tc.expected {
 			t.Errorf("`'%v' failed; wanted %v, but got %v", tc.name, tc.expected, actual)
 		}
 	}
@@ -40,7 +40,7 @@ func TestInverseCaptchaWithWrapAround(t *testing.T) {
 
 func TestInverseCaptchaWithHalfwayAround(t *testing.T) {
 	for _, tc := range halfWayAroundTestCases {
-		if actual := InverseCaptcha(tc.input, tc.addfunc); actual != tc.expected {
+		if actual := InverseCaptcha(tc.input, tc.fn); actual != tc.expected {
 			t.Errorf("`'%v' failed; wanted %v, but got %v", tc.name, tc.expected, actual)
 		}
 	}
@@ -52,7 +52,7 @@ func BenchmarkInverseCaptchaWithWrapAround(b *testing.B) {
 		b.StartTimer()
 
 		for i := 0; i < b.N; i++ {
-			InverseCaptcha(tt.input, tt.addfunc)
+			InverseCaptcha(tt.input, tt.fn)
 		}
 
 		b.StopTimer()
@@ -65,7 +65,7 @@ func BenchmarkInverseCaptchaWithHalfwayAround(b *testing.B) {
 		b.StartTimer()
 
 		for i := 0; i < b.N; i++ {
-			InverseCaptcha(tt.input, tt.addfunc)
+			InverseCaptcha(tt.input, tt.fn)
 		}
 
 		b.StopTimer()
