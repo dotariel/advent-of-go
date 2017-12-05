@@ -39,12 +39,19 @@ func init() {
 	})
 }
 
-func Run(day int) {
+func Run(day int) error {
 	file := fmt.Sprintf("%v/src/github.com/dotariel/advent-of-go/exercise/inputs/%d", os.Getenv("GOPATH"), day)
 	bytes, _ := ioutil.ReadFile(file)
 
-	exercise := exercises[day]
+	exercise, ok := exercises[day]
 
-	fmt.Println("Part 1: ", exercise[0](string(bytes)))
-	fmt.Println("Part 2: ", exercise[1](string(bytes)))
+	if !ok {
+		return fmt.Errorf("no exercise found for day %v", day)
+	}
+
+	for part, fn := range exercise {
+		fmt.Printf("Part %v: %v\n", part+1, fn(string(bytes)))
+	}
+
+	return nil
 }

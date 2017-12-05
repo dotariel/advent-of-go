@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"strconv"
 
@@ -8,6 +9,24 @@ import (
 )
 
 func main() {
-	day, _ := strconv.ParseInt(os.Args[1], 10, 8)
-	exercise.Run(int(day))
+
+	if len(os.Args) < 2 {
+		usage()
+		return
+	}
+
+	day, err := strconv.ParseInt(os.Args[1], 10, 8)
+	if err != nil {
+		usage()
+		return
+	}
+
+	if err := exercise.Run(int(day)); err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+}
+
+func usage() {
+	fmt.Println("usage: advent-of-go <day>")
 }
