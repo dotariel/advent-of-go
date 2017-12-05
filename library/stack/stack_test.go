@@ -10,9 +10,9 @@ var testCases = []struct {
 	resolver OffsetResolver
 	expected int
 }{
-	{[]int{0, 3, 0, 1, -3}, SimpleIncrementer, 5},
-	{[]int{0, 2, 0, 1, -3}, SimpleIncrementer, 10},
-	{[]int{0, 3, 0, 1, -3}, BiasedDecrementer, 10},
+	{Stack{0, 3, 0, 1, -3}, SimpleIncrementer, 5},
+	{Stack{0, 2, 0, 1, -3}, SimpleIncrementer, 10},
+	{Stack{0, 3, 0, 1, -3}, BiasedDecrementer, 10},
 }
 
 func TestTrace(t *testing.T) {
