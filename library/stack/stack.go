@@ -8,9 +8,30 @@ import (
 // Stack represents a list of instructions
 type Stack []int
 
+// OffsetResolver represents a function that can resolve the value
+// of a given offset
+type OffsetResolver func(int) int
+
+// SimpleIncrementer is an OffsetResolver function that increase
+// the offset by 1
+func SimpleIncrementer(offset int) int {
+	return offset + 1
+}
+
+// BiasedDecrementer is an OffsetResolver function that decrements
+// the offset by 1 if the offset is 3 or more, and increments by 1
+// otherwise
+func BiasedDecrementer(offset int) int {
+	if offset >= 3 {
+		return offset - 1
+	}
+
+	return offset + 1
+}
+
 // Trace processes the instructions in the Stack and returns the
 // number of instructions processed before leaving the Stack.
-func (stack Stack) Trace() int {
+func (stack Stack) Trace(resolver OffsetResolver) int {
 	pos := 0
 	jumps := 0
 
@@ -18,9 +39,16 @@ func (stack Stack) Trace() int {
 		if pos < 0 || pos > len(stack)-1 {
 			break
 		}
-		jump := stack[pos]
-		stack[pos]++
-		pos += jump
+
+		offset := stack[pos]
+
+		// Resolve the offset based on the provided resolver
+		stack[pos] = resolver(stack[pos])
+
+		// Jump to the next instruction
+		pos += offset
+
+		// Increment the number of jumps
 		jumps++
 	}
 
