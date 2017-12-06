@@ -19,38 +19,39 @@ func NewState(input string) State {
 	return state
 }
 
-func (banks State) Redistribute() int {
+func (state State) Redistribute() {
+	// Start with bank with the highest number. If more than one bank has
+	// the highest number, use the bank with the lowest position.
+	bank, blocks := FindLargest(state)
+
+	// Reset the blocks to 0 since they will be redistributed.
+	state[bank] = 0
+
+	// Starting with the next bank, distribute one block to each bank,
+	// wrapping around to the beginning, until all the blocks have been
+	// redistributed.
+	nextBank := bank + 1
+	for distributed := blocks; distributed > 0; distributed-- {
+		if nextBank >= len(state) {
+			nextBank = 0
+		}
+
+		state[nextBank]++
+		nextBank++
+	}
+}
+
+func (state State) CountCycles() int {
 	states := make([]State, 0)
 	cycles := 0
 
 	for {
-		// Start with bank with the highest number. If more than one bank has
-		// the highest number, use the bank with the lowest position.
-		bank, blocks := FindLargest(banks)
-
-		// Reset the blocks to 0 since they will be redistributed.
-		banks[bank] = 0
-
-		// Starting with the next bank, distribute one block to each bank,
-		// wrapping around to the beginning, until all the blocks have been
-		// redistributed.
-		nextBank := bank + 1
-		for distributed := blocks; distributed > 0; distributed-- {
-			if nextBank >= len(banks) {
-				nextBank = 0
-			}
-
-			banks[nextBank]++
-			nextBank++
-		}
-
-		// Increment cycle count
+		state.Redistribute()
 		cycles++
 
-		// If new allocation has been seen before, break out and return
-		t := make([]int, len(banks))
-		copy(t, banks)
-		if HasState(states, t) {
+		t := make([]int, len(state))
+		copy(t, state)
+		if Contains(states, t) {
 			break
 		}
 
@@ -60,11 +61,11 @@ func (banks State) Redistribute() int {
 	return cycles
 }
 
-func FindLargest(banks []int) (int, int) {
+func FindLargest(state []int) (int, int) {
 	max := 0
 	pos := 0
 
-	for i, blocks := range banks {
+	for i, blocks := range state {
 		if blocks > max {
 			max = blocks
 			pos = i
@@ -74,7 +75,7 @@ func FindLargest(banks []int) (int, int) {
 	return pos, max
 }
 
-func HasState(states []State, state State) bool {
+func Contains(states []State, state State) bool {
 	for _, s := range states {
 		if reflect.DeepEqual(state, s) {
 			return true
