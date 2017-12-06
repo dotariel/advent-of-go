@@ -52,7 +52,6 @@ func BenchmarkRedistribute(b *testing.B) {
 		b.StopTimer()
 	}
 }
-
 func TestFindLargest(t *testing.T) {
 	testCases := []struct {
 		input    []int

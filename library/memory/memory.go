@@ -52,13 +52,11 @@ func (state State) CountCycles() int {
 		t := make([]int, len(state))
 		copy(t, state)
 		if Contains(states, t) {
-			break
+			return cycles
 		}
 
 		states = append(states, t)
 	}
-
-	return cycles
 }
 
 func FindLargest(state []int) (int, int) {

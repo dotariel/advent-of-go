@@ -39,7 +39,7 @@ func init() {
 		func(input string) interface{} { return stack.NewStack(input).Trace(stack.BiasedDecrementer) },
 	})
 	exercises[6] = Exercise([]Part{
-		func(input string) interface{} { return memory.NewState(input).Redistribute() },
+		func(input string) interface{} { return memory.NewState(input).CountCycles() },
 		// func(input string) interface{} { return stack.NewStack(input).Trace(stack.BiasedDecrementer) },
 	})
 }
