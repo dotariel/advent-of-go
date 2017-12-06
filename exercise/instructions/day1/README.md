@@ -6,7 +6,7 @@ When your eyes can focus again, everything seems a lot more pixelated than befor
 
 Collect stars by solving puzzles. Two puzzles will be made available on each day millisecond in the advent calendar; the second puzzle is unlocked when you complete the first. Each puzzle grants `one star`. Good luck!
 
-## Part One
+## Part 1
 
 You're standing in a room with "digitization quarantine" written in LEDs along one wall. The only door is locked, but it includes a small interface. "Restricted Area - Strictly No Digitized Users Allowed."
 
@@ -21,7 +21,7 @@ For example:
 * 1234 produces 0 because no digit matches the next.
 * 91212129 produces 9 because the only digit that matches the next one is the last digit, 9.
 
-## Part Two
+## Part 2
 
 You notice a progress bar that jumps to 50% completion. Apparently, the door isn't yet satisfied, but it did emit a star as encouragement. The instructions change:
 

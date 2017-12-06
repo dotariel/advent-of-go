@@ -16,7 +16,7 @@ aa bb cc dd aaa is valid - aa and aaa count as different words.
 
 The system's full passphrase list is available as your puzzle input. How many passphrases are valid?
 
-## Part Two
+## Part 2
 
 For added security, yet another system policy has been put in place. Now, a valid passphrase must contain no two words that are anagrams of each other - that is, a passphrase is invalid if any word's letters can be rearranged to form any other word in the passphrase.
 

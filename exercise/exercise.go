@@ -7,6 +7,7 @@ import (
 
 	"github.com/dotariel/advent-of-go/library/captcha"
 	"github.com/dotariel/advent-of-go/library/checksum"
+	"github.com/dotariel/advent-of-go/library/memory"
 	"github.com/dotariel/advent-of-go/library/passphrase"
 	"github.com/dotariel/advent-of-go/library/stack"
 )
@@ -36,6 +37,10 @@ func init() {
 	exercises[5] = Exercise([]Part{
 		func(input string) interface{} { return stack.NewStack(input).Trace(stack.SimpleIncrementer) },
 		func(input string) interface{} { return stack.NewStack(input).Trace(stack.BiasedDecrementer) },
+	})
+	exercises[6] = Exercise([]Part{
+		func(input string) interface{} { return memory.NewState(input).Redistribute() },
+		// func(input string) interface{} { return stack.NewStack(input).Trace(stack.BiasedDecrementer) },
 	})
 }
 
