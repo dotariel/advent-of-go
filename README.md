@@ -11,9 +11,3 @@ To run an exercise:
 ```bash
 go run main.go <day>
 ```
-
-or
-
-```bash
-./advent-of-go <day>
-```
