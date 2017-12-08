@@ -10,6 +10,7 @@ import (
 	"github.com/dotariel/advent-of-go/library/memory"
 	"github.com/dotariel/advent-of-go/library/passphrase"
 	"github.com/dotariel/advent-of-go/library/stack"
+	"github.com/dotariel/advent-of-go/library/tower"
 )
 
 var exercises = make(map[int]Exercise)
@@ -42,6 +43,13 @@ func init() {
 		func(input string) interface{} { return memory.NewState(input).CountCycles() },
 		// func(input string) interface{} { return stack.NewStack(input).Trace(stack.BiasedDecrementer) },
 	})
+	exercises[7] = Exercise([]Part{
+		func(input string) interface{} { return tower.New(input).Name },
+		func(input string) interface{} {
+			return tower.FindMismatch(tower.New(input))
+		},
+	})
+
 }
 
 func Run(day int) error {
