@@ -101,14 +101,15 @@ func TestRegisters_ProcessBatch(t *testing.T) {
 	r := New()
 	highest := r.ProcessBatch(input)
 
-	expectedMax := 1
-	expectedHighest := 10
+	expected := struct {
+		max, high int
+	}{1, 10}
 
-	if r.Max() != expectedMax {
-		t.Errorf("failed; wanted:%v, but got:%v", expectedMax, r.Max())
+	if r.Max() != expected.max {
+		t.Errorf("failed; wanted:%v, but got:%v", expected.max, r.Max())
 	}
 
-	if highest != expectedHighest {
-		t.Errorf("failed; wanted:%v, but got:%v", expectedHighest, highest)
+	if highest != expected.high {
+		t.Errorf("failed; wanted:%v, but got:%v", expected.high, highest)
 	}
 }
