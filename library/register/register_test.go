@@ -20,7 +20,7 @@ func TestOperations(t *testing.T) {
 	}
 
 	for _, tt := range testCases {
-		if actual := operationFromString(tt.operation)(tt.a, tt.b); actual != tt.expected {
+		if actual := NewOperation(tt.operation)(tt.a, tt.b); actual != tt.expected {
 			t.Errorf("failed %v(%v,%v); wanted:%v but got:%v", tt.operation, tt.a, tt.b, tt.expected, actual)
 		}
 	}
@@ -45,7 +45,7 @@ func TestConditions(t *testing.T) {
 	}
 
 	for _, tt := range testCases {
-		if actual := conditionFromString(tt.condition)(tt.a, tt.b); actual != tt.expected {
+		if actual := NewCondition(tt.condition)(tt.a, tt.b); actual != tt.expected {
 			t.Errorf("failed %v(%v,%v); wanted:%v but got:%v", tt.condition, tt.a, tt.b, tt.expected, actual)
 		}
 	}

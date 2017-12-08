@@ -6,11 +6,15 @@ import (
 	"strings"
 )
 
-type operation func(int, int) int
-type condition func(int, int) bool
-
+// Registers is an alias for a map of string,int
 type Registers map[string]int
 
+// New constructs an empty Registers
+func New() Registers {
+	return Registers(make(map[string]int))
+}
+
+// Max returns the highest value in any of the registers
 func (r Registers) Max() (max int) {
 	values := make([]int, 0)
 
@@ -31,46 +35,7 @@ func (r Registers) Max() (max int) {
 	return
 }
 
-func inc(n, x int) int {
-	return n + x
-}
-
-func dec(n, x int) int {
-	return n - x
-}
-
-func noop(n, x int) int {
-	return n
-}
-
-func eq(a, b int) bool {
-	return a == b
-}
-
-func neq(a, b int) bool {
-	return !eq(a, b)
-}
-
-func gt(a, b int) bool {
-	return a > b
-}
-
-func gte(a, b int) bool {
-	return a >= b
-}
-
-func lt(a, b int) bool {
-	return a < b
-}
-
-func lte(a, b int) bool {
-	return a <= b
-}
-
-func New() Registers {
-	return Registers(make(map[string]int))
-}
-
+// Process takes a single instruction and process it
 func (r Registers) Process(instruction string) {
 	exp := regexp.MustCompile("(?P<or>[a-z]+) (?P<op>[inc|dec]{3}) (?P<opx>-?[0-9]+) if (?P<cr>[a-z]+) (?P<cond>[!<>=]{1,2}) (?P<condx>-?[0-9]+)")
 	match := exp.FindStringSubmatch(instruction)
@@ -93,17 +58,19 @@ func (r Registers) Process(instruction string) {
 		r[cr] = 0
 	}
 
-	cFn := conditionFromString(result["cond"])
+	cFn := NewCondition(result["cond"])
 	cX, _ := strconv.ParseInt(result["condx"], 10, 64)
 
 	if condition := cFn(r[cr], int(cX)); condition {
-		oFn := operationFromString(result["op"])
+		oFn := NewOperation(result["op"])
 		oX, _ := strconv.ParseInt(result["opx"], 10, 64)
 
 		r[or] = oFn(r[or], int(oX))
 	}
 }
 
+// ProcessBatch processes several instructions from a
+// line-separated list of strings
 func (r Registers) ProcessBatch(input string) int {
 	highest := 0
 
@@ -115,39 +82,4 @@ func (r Registers) ProcessBatch(input string) int {
 	}
 
 	return highest
-}
-
-func operationFromString(op string) operation {
-	switch op {
-	case "inc":
-		return inc
-	case "dec":
-		return dec
-	}
-
-	return noop
-}
-
-func conditionFromString(c string) condition {
-	if c == "<" {
-		return lt
-	}
-
-	if c == "<=" {
-		return lte
-	}
-
-	if c == ">" {
-		return gt
-	}
-
-	if c == ">=" {
-		return gte
-	}
-
-	if c == "!=" {
-		return neq
-	}
-
-	return eq
 }
