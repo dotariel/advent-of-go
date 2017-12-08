@@ -9,6 +9,7 @@ import (
 	"github.com/dotariel/advent-of-go/library/checksum"
 	"github.com/dotariel/advent-of-go/library/memory"
 	"github.com/dotariel/advent-of-go/library/passphrase"
+	"github.com/dotariel/advent-of-go/library/register"
 	"github.com/dotariel/advent-of-go/library/stack"
 	"github.com/dotariel/advent-of-go/library/tower"
 )
@@ -47,6 +48,18 @@ func init() {
 		func(input string) interface{} { return tower.New(input).Name },
 		func(input string) interface{} {
 			return tower.FindMismatch(tower.New(input))
+		},
+	})
+	exercises[8] = Exercise([]Part{
+		func(input string) interface{} {
+			registers := register.New()
+			registers.ProcessBatch(input)
+
+			return registers.Max()
+		},
+		func(input string) interface{} {
+			registers := register.New()
+			return registers.ProcessBatch(input)
 		},
 	})
 
