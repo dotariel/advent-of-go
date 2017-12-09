@@ -11,6 +11,7 @@ import (
 	"github.com/dotariel/advent-of-go/library/passphrase"
 	"github.com/dotariel/advent-of-go/library/register"
 	"github.com/dotariel/advent-of-go/library/stack"
+	"github.com/dotariel/advent-of-go/library/stream"
 	"github.com/dotariel/advent-of-go/library/tower"
 )
 
@@ -60,6 +61,21 @@ func init() {
 		func(input string) interface{} {
 			registers := register.New()
 			return registers.ProcessBatch(input)
+		},
+	})
+	exercises[9] = Exercise([]Part{
+		func(input string) interface{} {
+			score := 0
+			groups, _, _ := stream.Parse(input)
+			for _, group := range groups {
+				score += group
+			}
+
+			return score
+		},
+		func(input string) interface{} {
+			_, _, removed := stream.Parse(input)
+			return removed
 		},
 	})
 
