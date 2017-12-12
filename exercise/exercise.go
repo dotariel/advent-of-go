@@ -7,6 +7,7 @@ import (
 
 	"github.com/dotariel/advent-of-go/library/captcha"
 	"github.com/dotariel/advent-of-go/library/checksum"
+	"github.com/dotariel/advent-of-go/library/hash"
 	"github.com/dotariel/advent-of-go/library/memory"
 	"github.com/dotariel/advent-of-go/library/passphrase"
 	"github.com/dotariel/advent-of-go/library/register"
@@ -76,6 +77,21 @@ func init() {
 		func(input string) interface{} {
 			_, _, removed := stream.Parse(input)
 			return removed
+		},
+	})
+
+	days[10] = Exercise([]Part{
+		func(input string) interface{} {
+			lengths := hash.Parse(input)
+			list := make([]uint8, 0)
+
+			for i := 0; i < 256; i++ {
+				list = append(list, uint8(i))
+			}
+
+			hash := hash.Hash(list, lengths)
+
+			return int(hash[0]) * int(hash[1])
 		},
 	})
 
