@@ -27,7 +27,7 @@ func Hash(list, lengths []uint8) []uint8 {
 	return ret
 }
 
-// Parse parses a comma-separated string of uint8 values into a valid input for Hash
+// Parse parses a comma-separated string of uint8 values into a []uint8 slice
 func Parse(input string) (list []uint8) {
 	if len(input) == 0 {
 		return
