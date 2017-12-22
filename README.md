@@ -11,3 +11,4 @@ To run an exercise:
 ```bash
 go run main.go <day>
 ```
+
