@@ -1,11 +1,13 @@
 package stream
 
 func Parse(input string) ([]int, bool, int) {
-	var skipNext bool
-	var inGarbage bool
-	var hasGarbage bool
-	var garbageRemoved int
-	var groupIdx int
+	var (
+		skipNext       bool
+		inGarbage      bool
+		hasGarbage     bool
+		garbageRemoved int
+		groupIdx       int
+	)
 
 	groups := make([]int, 0)
 
