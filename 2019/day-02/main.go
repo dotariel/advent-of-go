@@ -5,16 +5,56 @@ import (
 	"fmt"
 )
 
+type Program struct {
+	InitialState []int
+}
+
+const (
+	add      = 1
+	multiply = 2
+	halt     = 99
+)
+
 func main() {
 	inputs := inputReader.ReadInts("input.txt", ",")
 
-	// Place in '1202 program alarm' state
-	inputs[1] = 12
-	inputs[2] = 2
+	Part1(inputs)
+	Part2(inputs)
+}
 
-	intCode := Intcode(inputs)
+func Part1(inputs []int) {
+	fmt.Printf("Part 1: %v\n", NewProgram(inputs).Run(12, 2))
+}
 
-	fmt.Println(intCode[0])
+func Part2(inputs []int) {
+	p := NewProgram(inputs)
+	desired := 19690720
+	noun := 0
+	verb := 0
+
+	for i := 0; i < 100; i++ {
+		for j := 0; j < 100; j++ {
+			if actual := p.Run(i, j); actual == desired {
+				noun = i
+				verb = j
+				break
+			}
+		}
+	}
+
+	fmt.Printf("Part 2: noun:%v, verb:%v; total:%v\n", noun, verb, (100*noun + verb))
+}
+
+func NewProgram(state []int) Program {
+	return Program{InitialState: state}
+}
+
+func (p Program) Run(noun int, verb int) int {
+	memory := append([]int(nil), p.InitialState...)
+	memory[1] = noun
+	memory[2] = verb
+
+	return Intcode(memory)[0]
 }
 
 func Intcode(input []int) []int {
