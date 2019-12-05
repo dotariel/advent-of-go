@@ -20,7 +20,7 @@ type Rect struct {
 }
 
 func main() {
-	inputs := inputreader.ReadStrings("input.txt")
+	inputs := inputreader.ReadStrings("input.txt", "\n")
 	claims := make([]Claim, 0)
 
 	for _, input := range inputs {

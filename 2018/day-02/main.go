@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	inputs := inputreader.ReadStrings("input.txt")
+	inputs := inputreader.ReadStrings("input.txt", "\n")
 	checksum := Checksum(inputs)
 	unique := Unique(inputs)
 

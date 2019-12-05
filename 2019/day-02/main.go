@@ -16,7 +16,7 @@ const (
 )
 
 func main() {
-	inputs := inputReader.ReadInts("input.txt", ",")
+	inputs := inputreader.ReadInts("input.txt", ",")
 
 	Part1(inputs)
 	Part2(inputs)

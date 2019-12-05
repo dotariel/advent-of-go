@@ -1,4 +1,4 @@
-package inputReader
+package inputreader
 
 import (
 	"io/ioutil"

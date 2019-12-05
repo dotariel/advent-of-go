@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	changes := inputreader.ReadInts("input.txt")
+	changes := inputreader.ReadInts("input.txt", "\n")
 
 	println(GetFrequency(changes))
 	println(GetDuplicateFrequency(changes))

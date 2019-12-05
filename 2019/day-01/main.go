@@ -8,7 +8,7 @@ import (
 
 func main() {
 	requiredFuel := 0.0
-	for _, val := range inputreader.ReadFloats("input.txt") {
+	for _, val := range inputreader.ReadFloats("input.txt", "\n") {
 		requiredFuel += GetTotalFuel(val, 0.0)
 	}
 
