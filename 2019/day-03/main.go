@@ -16,21 +16,25 @@ type Point struct {
 
 var origin = NewPoint(0, 0)
 
+var path1 []string
+var path2 []string
+
 func main() {
 	data := inputreader.ReadStrings("input.txt", "\n")
 
-	w1 := strings.Split(data[0], ",")
-	w2 := strings.Split(data[1], ",")
+	path1 = strings.Split(data[0], ",")
+	path2 = strings.Split(data[1], ",")
 
-	Part1(w1, w2)
+	// Part1()
+	Part2()
 }
 
-func Part1(w1 []string, w2 []string) {
+func Part1() {
 	p1 := origin.Clone()
 	p2 := origin.Clone()
 
-	p1.Path(w1)
-	p2.Path(w2)
+	p1.Path(path1)
+	p2.Path(path2)
 
 	distance := -1
 	for _, point := range p1.Intersects(p2) {
@@ -42,6 +46,23 @@ func Part1(w1 []string, w2 []string) {
 	}
 
 	fmt.Printf("Shortest distance is: %v\n", distance)
+}
+
+func Part2() {
+	p1 := origin.Clone()
+	p2 := origin.Clone()
+
+	p1.Path(path1)
+	p2.Path(path2)
+
+	steps := 0
+	for _, point := range p1.Intersects(p2) {
+		if d := p1.StepsFrom(point) + p2.StepsFrom(point); steps < 1 || d < steps {
+			steps = d
+		}
+	}
+
+	fmt.Printf("Fewest steps: %v\n", steps)
 }
 
 func NewPoint(x int, y int) *Point {
@@ -77,18 +98,17 @@ func (p *Point) Intersects(q *Point) []*Point {
 	xs := make([]*Point, 0)
 
 	for _, i := range p.trail {
-		ch := make(chan []*Point)
 
-		go func(i *Point, trail []*Point) {
+		ch := make(chan []*Point)
+		go func(trail []*Point) {
 			localXs := make([]*Point, 0)
 			for _, j := range trail {
 				if i.Equals(j) {
 					localXs = append(localXs, i)
 				}
 			}
-
 			ch <- localXs
-		}(i, q.trail)
+		}(q.trail)
 
 		xs = append(xs, <-ch...)
 	}
@@ -112,4 +132,14 @@ func (p *Point) Equals(q *Point) bool {
 
 func (p *Point) Clone() *Point {
 	return NewPoint(p.x, p.y)
+}
+
+func (p *Point) StepsFrom(q *Point) int {
+	for idx, point := range p.trail {
+		if point.Equals(q) {
+			return idx
+		}
+	}
+
+	return -1
 }

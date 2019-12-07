@@ -32,25 +32,28 @@ func TestMove(t *testing.T) {
 	}
 }
 
-func TestIntersects(t *testing.T) {
-	testCases := []struct {
-		w1       []string
-		w2       []string
-		distance int
-	}{
-		{
-			[]string{"R75", "D30", "R83", "U83", "L12", "D49", "R71", "U7", "L72"},
-			[]string{"U62", "R66", "U55", "R34", "D71", "R55", "D58", "R83"},
-			159,
-		},
-		{
-			[]string{"R98", "U47", "R26", "D63", "R33", "U87", "L62", "D20", "R33", "U53", "R51"},
-			[]string{"U98", "R91", "D20", "R16", "D67", "R40", "U7", "R15", "U6", "R7"},
-			135,
-		},
-	}
+var intersectTestCases = []struct {
+	w1       []string
+	w2       []string
+	distance int
+	steps    int
+}{
+	{
+		[]string{"R75", "D30", "R83", "U83", "L12", "D49", "R71", "U7", "L72"},
+		[]string{"U62", "R66", "U55", "R34", "D71", "R55", "D58", "R83"},
+		159,
+		610,
+	},
+	{
+		[]string{"R98", "U47", "R26", "D63", "R33", "U87", "L62", "D20", "R33", "U53", "R51"},
+		[]string{"U98", "R91", "D20", "R16", "D67", "R40", "U7", "R15", "U6", "R7"},
+		135,
+		410,
+	},
+}
 
-	for _, tc := range testCases {
+func TestIntersects(t *testing.T) {
+	for _, tc := range intersectTestCases {
 		p1 := origin.Clone()
 		p2 := origin.Clone()
 		p1.Path(tc.w1)
@@ -71,18 +74,43 @@ func TestIntersects(t *testing.T) {
 	}
 }
 
-func TestDistanceFrom(t *testing.T) {
-	testCases := []struct {
-		x        int
-		y        int
-		distance int
-	}{
-		{1, 1, 2},
-		{2, 3, 5},
-		{8, 12, 20},
-	}
+var distanceTestCases = []struct {
+	x        int
+	y        int
+	distance int
+}{
+	{1, 1, 2},
+	{2, 3, 5},
+	{8, 12, 20},
+}
 
-	for _, tc := range testCases {
+func TestDistanceFrom(t *testing.T) {
+	for _, tc := range distanceTestCases {
 		assert.Equal(t, tc.distance, NewPoint(tc.x, tc.y).DistanceFrom(origin))
+	}
+}
+
+func BenchmarkDistanceFrom(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		for _, tc := range distanceTestCases {
+			NewPoint(tc.x, tc.y).DistanceFrom(origin)
+		}
+	}
+}
+
+func TestStepsToIntersection(t *testing.T) {
+	for _, tc := range intersectTestCases {
+		p1 := origin.Clone()
+		p2 := origin.Clone()
+		p1.Path(tc.w1)
+		p2.Path(tc.w2)
+
+		steps := 0
+		for _, point := range p1.Intersects(p2) {
+			if d := p1.StepsFrom(point) + p2.StepsFrom(point); steps < 1 || d < steps {
+				steps = d
+			}
+		}
+		assert.Equal(t, tc.steps, steps)
 	}
 }
