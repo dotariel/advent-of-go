@@ -23,3 +23,24 @@ func TestIntcode(t *testing.T) {
 		}
 	}
 }
+
+func TestParseInstruction(t *testing.T) {
+	// 1002, 4, 3, 4
+	/*
+		1002      - (02) = 2 = Multiply
+		4,3,4,33  - Four parameters, we need a position mode for each
+		parameters[0] = 0
+		parameters[1] = 1
+		parameters[2] = 0 (not present)
+
+		This will multiply 3(position) x 4(immediate) and store in 4 (position)
+
+		1 Add       - 3 args (a, b, result) -> adds a and b and saves to result
+		2 Multiply  - 3 args (a, b, result) -> multiplies a and b and saves to result
+		3 Put       - 1 arg (a)             -> saves a into result
+		4 Get       - 1 arg (a)			    -> returns value at a
+
+
+	*/
+
+}
