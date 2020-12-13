@@ -8,6 +8,12 @@ import (
 
 type Iterator = func(s string)
 
+func ReadAll(file string) string {
+	bytes, _ := ioutil.ReadFile(file)
+
+	return string(bytes)
+}
+
 func ReadStrings(file string, delim string) []string {
 	vals := make([]string, 0)
 
