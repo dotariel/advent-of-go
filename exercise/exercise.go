@@ -2,7 +2,7 @@ package exercise
 
 import "fmt"
 
-type ExerciseFn func() int
+type ExerciseFn func() interface{}
 
 type Exercise struct {
 	Part1 ExerciseFn

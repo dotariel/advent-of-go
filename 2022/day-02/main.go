@@ -9,7 +9,7 @@ func main() {
 	exercise.New(Part1, Part2).Run()
 }
 
-func Part1() int {
+func Part1() interface{} {
 	entries := inputreader.ReadStrings("input.txt", "\n")
 	total := 0
 
@@ -20,7 +20,7 @@ func Part1() int {
 	return total
 }
 
-func Part2() int {
+func Part2() interface{} {
 	entries := inputreader.ReadStrings("input.txt", "\n")
 	total := 0
 
