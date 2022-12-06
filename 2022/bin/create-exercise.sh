@@ -23,11 +23,11 @@ func main() {
 	fmt.Printf("Part 2: %v\n", Part2())
 }
 
-func Part1() int {
+func Part1() interface{} {
 	return 0
 }
 
-func Part2() int {
+func Part2() interface{} {
 	return 0
 }
 EOF
