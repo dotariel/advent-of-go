@@ -9,7 +9,7 @@ func FindMessage(s string) int {
 }
 
 func FindN(s string, offset int) int {
-	for i := 0; i < len(s)-3; i++ {
+	for i := 0; i < len(s)-(offset-1); i++ {
 		buffer := []rune(s[i : i+offset])
 		unique := Unique(buffer)
 		found := len(buffer) != len(unique)
