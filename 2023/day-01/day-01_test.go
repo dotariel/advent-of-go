@@ -1,7 +1,6 @@
 package main
 
 import (
-	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -47,12 +46,4 @@ func TestCalibration_GetExtendedValue(t *testing.T) {
 
 		assert.Equal(t, tc.expected, c.GetExtendedValue())
 	}
-}
-
-func Test(t *testing.T) {
-
-	s := "12345"
-
-	assert.Equal(t, "45", strings.TrimPrefix(s, "123"))
-	assert.Equal(t, "2345", s[1:])
 }
