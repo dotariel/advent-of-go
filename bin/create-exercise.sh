@@ -1,13 +1,13 @@
 #!/bin/bash
 
-if [[ ! $# -eq 1 ]]; then
-  echo "usage: create-exercise DAY"
+if [[ ! $# -eq 2 ]]; then
+  echo "usage: create-exercise YEAR DAY"
   exit
 fi
 
-day=$1
-dir=day-${day}
-
+year=$1
+day=$2
+dir=${year}/day-${day}
 
 mkdir -p ${dir}
 
@@ -33,11 +33,11 @@ func Part2() interface{} {
 EOF
 
 
-cat << EOF > ${dir}/day${day}.go
+cat << EOF > ${dir}/day-${day}.go
 package main
 EOF
 
-cat << EOF > ${dir}/day${day}_test.go
+cat << EOF > ${dir}/day-${day}_test.go
 package main
 EOF
 
