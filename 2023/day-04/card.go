@@ -57,6 +57,10 @@ func (c Card) Points() int {
 	return points
 }
 
+func (c Card) IsWinner() bool {
+	return len(c.GetMatches()) > 0
+}
+
 func toInt(s string) int {
 	if i, err := strconv.Atoi(s); err == nil {
 		return i

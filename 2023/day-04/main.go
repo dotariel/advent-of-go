@@ -21,5 +21,11 @@ func Part1() interface{} {
 }
 
 func Part2() interface{} {
-	return 0
+	table := Cards{}
+
+	for _, input := range inputreader.ReadStrings("input.txt", "\n") {
+		table = append(table, NewCard(input))
+	}
+
+	return len(Accumulate(table))
 }
