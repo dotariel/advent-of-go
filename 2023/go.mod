@@ -1,6 +1,6 @@
 module dotariel/advent-of-go/2023
 
-go 1.19
+go 1.21
 
 require (
 	dotariel/inputreader v0.0.0
