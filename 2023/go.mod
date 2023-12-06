@@ -16,3 +16,5 @@ require (
 replace dotariel/exercise => ../exercise
 
 replace dotariel/inputreader => ../inputreader
+
+replace dotariel/util => ../util

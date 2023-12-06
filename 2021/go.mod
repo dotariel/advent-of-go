@@ -3,7 +3,6 @@ module dotariel/advent-of-go/2021
 go 1.19
 
 require (
-	dotariel/exercise v0.0.0
 	dotariel/inputreader v0.0.0
 	github.com/stretchr/testify v1.8.1
 )

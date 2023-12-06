@@ -4,4 +4,9 @@ use ./2021
 
 use ./2022
 
-use ./2023
+use (
+	./2023
+	./inputreader
+	./intcode
+	./util
+)

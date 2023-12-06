@@ -1,8 +1,8 @@
 package main
 
 import (
+	"dotariel/util"
 	"regexp"
-	"strconv"
 	"strings"
 )
 
@@ -17,9 +17,9 @@ func NewCard(s string) Card {
 	matches := r.FindStringSubmatch(s)
 
 	return Card{
-		id:      toInt(matches[1]),
-		numbers: toInts(strings.Fields(matches[2])),
-		winners: toInts(strings.Fields(matches[3])),
+		id:      util.ToInt(matches[1]),
+		numbers: util.ToInts(strings.Fields(matches[2])),
+		winners: util.ToInts(strings.Fields(matches[3])),
 	}
 }
 
@@ -59,22 +59,4 @@ func (c Card) Points() int {
 
 func (c Card) IsWinner() bool {
 	return len(c.GetMatches()) > 0
-}
-
-func toInt(s string) int {
-	if i, err := strconv.Atoi(s); err == nil {
-		return i
-	}
-
-	return 0
-}
-
-func toInts(ss []string) []int {
-	ints := make([]int, 0)
-
-	for _, s := range ss {
-		ints = append(ints, toInt(s))
-	}
-
-	return ints
 }
