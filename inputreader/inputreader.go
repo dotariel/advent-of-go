@@ -2,6 +2,7 @@ package inputreader
 
 import (
 	"io/ioutil"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -47,7 +48,7 @@ func ReadFloats(file string, delim string) []float64 {
 }
 
 func Read(file string, delim string, iterator Iterator) {
-	bytes, _ := ioutil.ReadFile(file)
+	bytes, _ := os.ReadFile(file)
 
 	for _, row := range strings.Split(string(bytes), delim) {
 		iterator(row)
