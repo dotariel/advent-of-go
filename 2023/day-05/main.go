@@ -3,7 +3,7 @@ package main
 import (
 	"dotariel/inputreader"
 	"fmt"
-	"slices"
+	"math"
 )
 
 func main() {
@@ -13,16 +13,25 @@ func main() {
 
 func Part1() interface{} {
 	almanac := NewAlmanac(inputreader.ReadAll("input.txt"))
-
-	locations := make([]int, 0)
+	low := math.MaxInt32
 
 	for _, seed := range almanac.Seeds {
-		locations = append(locations, almanac.Traverse(seed))
+		low = min(low, almanac.FindLocationBySeed(seed))
 	}
 
-	return slices.Min(locations)
+	return low
 }
 
 func Part2() interface{} {
-	return 0
+	low := math.MaxInt32
+
+	almanac := NewAlmanac(inputreader.ReadAll("input.txt"))
+
+	for _, rng := range almanac.GetSeedRanges() {
+		for seed := rng[0]; seed <= rng[1]; seed++ {
+			low = min(low, almanac.FindLocationBySeed(seed))
+		}
+	}
+
+	return low
 }

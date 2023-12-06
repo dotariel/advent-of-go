@@ -69,20 +69,46 @@ func (a Almanac) FindMapBySource(source string) (Map, error) {
 	return Map{}, errors.New("source not found")
 }
 
-func (a Almanac) Traverse(seed int) int {
-	source := a.Mappings[0]
+func (a Almanac) FindMapByDestination(destination string) (Map, error) {
+	for _, mapping := range a.Mappings {
+		if mapping.Destination == destination {
+			return mapping, nil
+		}
+	}
+
+	return Map{}, errors.New("destination not found")
+}
+
+func (a Almanac) FindLocationBySeed(seed int) int {
+	current := a.Mappings[0]
 	id := seed
 
 	for {
-		id = source.GetDestinationValue(id)
+		id = current.GetDestinationValue(id)
 
-		destination, err := a.FindMapBySource(source.Destination)
+		next, err := a.FindMapBySource(current.Destination)
 		if err != nil {
 			break
 		}
 
-		source = destination
+		current = next
 	}
 
 	return id
+}
+
+func (a Almanac) GetSeedRanges() [][]int {
+	seedranges := [][]int{}
+
+	i := 0
+	for {
+		seedranges = append(seedranges, []int{a.Seeds[i], a.Seeds[i] + a.Seeds[i+1] - 1})
+
+		if len(seedranges) == len(a.Seeds)/2 {
+			break
+		}
+		i += 2
+	}
+
+	return seedranges
 }

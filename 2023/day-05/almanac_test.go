@@ -89,11 +89,24 @@ func TestAlmanac_FindMapBySource(t *testing.T) {
 	}
 }
 
-func TestAlmanac_Traverse(t *testing.T) {
+func TestAlmanac_FindMapByDestination(t *testing.T) {
+	almanac := NewAlmanac(almanacInput)
+
+	testCases := []string{"soil", "fertilizer", "water", "light", "temperature", "humidity", "location"}
+
+	for _, tc := range testCases {
+		mapping, _ := almanac.FindMapByDestination(tc)
+		assert.Equal(t, tc, mapping.Destination)
+	}
+}
+
+func TestAlmanac_FindLocationBySeed(t *testing.T) {
 	a := NewAlmanac(almanacInput)
 
-	assert.Equal(t, 82, a.Traverse(79))
-	assert.Equal(t, 43, a.Traverse(14))
-	assert.Equal(t, 86, a.Traverse(55))
-	assert.Equal(t, 35, a.Traverse(13))
+	assert.Equal(t, 82, a.FindLocationBySeed(79))
+	assert.Equal(t, 43, a.FindLocationBySeed(14))
+	assert.Equal(t, 86, a.FindLocationBySeed(55))
+	assert.Equal(t, 35, a.FindLocationBySeed(13))
+	assert.Equal(t, 46, a.FindLocationBySeed(82)) // from Part 2
+	assert.Equal(t, 999, a.FindLocationBySeed(999))
 }
