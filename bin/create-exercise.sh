@@ -32,14 +32,11 @@ func Part2() interface{} {
 }
 EOF
 
+cat << EOF > ${dir}/Makefile
+DEFAULT := run
 
-cat << EOF > ${dir}/day-${day}.go
-package main
+run:
+	@go run .
 EOF
 
-cat << EOF > ${dir}/day-${day}_test.go
-package main
-EOF
-
-touch ${dir}/README.md
 touch ${dir}/input.txt
