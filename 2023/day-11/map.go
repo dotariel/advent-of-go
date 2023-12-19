@@ -12,6 +12,8 @@ type Galaxy struct {
 	Row, Col int
 }
 
+type Galaxies []Galaxy
+
 func NewMap(input string) Map {
 	m := [][]string{}
 
@@ -31,7 +33,7 @@ func (m Map) Print() {
 	}
 }
 
-func (m Map) Galaxies(expansion int) []Galaxy {
+func (m Map) Galaxies(expansion int) Galaxies {
 	galaxies := make([]Galaxy, 0)
 	offset := 0
 
@@ -83,13 +85,12 @@ func (p Galaxy) DistanceTo(other Galaxy) int {
 	return int(math.Abs(x1-x2) + math.Abs(y1-y2))
 }
 
-func (m Map) GetGalaxyPairs(expansion int) [][2]Galaxy {
-	galaxies := m.Galaxies(expansion)
+func (gs Galaxies) Pairs() [][2]Galaxy {
 	pairs := make([][2]Galaxy, 0)
 
-	for i := 0; i < len(galaxies)-1; i++ {
-		for j := i + 1; j < len(galaxies); j++ {
-			pairs = append(pairs, [2]Galaxy{galaxies[j], galaxies[i]})
+	for i := 0; i < len(gs)-1; i++ {
+		for j := i + 1; j < len(gs); j++ {
+			pairs = append(pairs, [2]Galaxy{gs[j], gs[i]})
 		}
 	}
 
@@ -97,12 +98,12 @@ func (m Map) GetGalaxyPairs(expansion int) [][2]Galaxy {
 }
 
 func (m Map) GetTotalDistance(expansion int) int {
-	pairs := m.GetGalaxyPairs(expansion)
+	pairs := m.Galaxies(expansion).Pairs() //m.GetGalaxyPairs(expansion)
 	distance := 0
 
 	for _, pair := range pairs {
 		distance += pair[0].DistanceTo(pair[1])
-
 	}
+
 	return distance
 }

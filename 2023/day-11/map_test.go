@@ -20,7 +20,7 @@ func TestImage_GetGalaxies(t *testing.T) {
 	assert.Len(t, m.Galaxies(1), 9)
 }
 
-func TestPoint_DistancetTo(t *testing.T) {
+func TestPoint_DistanceTo(t *testing.T) {
 	assert.Equal(t, 9, Galaxy{1, 6}.DistanceTo(Galaxy{5, 11}))
 	assert.Equal(t, 15, Galaxy{4, 0}.DistanceTo(Galaxy{9, 10}))
 	assert.Equal(t, 17, Galaxy{0, 2}.DistanceTo(Galaxy{12, 7}))
@@ -29,7 +29,7 @@ func TestPoint_DistancetTo(t *testing.T) {
 
 func TestImage_GetGalaxyPair(t *testing.T) {
 	m := NewMap(inputreader.ReadAll("sample_input.txt"))
-	pairs := m.GetGalaxyPairs(1)
+	pairs := m.Galaxies(1).Pairs()
 
 	assert.Len(t, pairs, 36)
 }
